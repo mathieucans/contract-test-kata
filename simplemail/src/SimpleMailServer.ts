@@ -7,7 +7,7 @@ export class SimpleMailServer {
     start() {
         const app = express();
         app.use(json());
-        app.post('/sendMail', (req, resp) => {
+        app.post('/sendmail', (req, resp) => {
             resp.sendStatus(200);
         });
 

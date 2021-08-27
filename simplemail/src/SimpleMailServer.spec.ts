@@ -6,7 +6,7 @@ describe('simple mail server', () => {
         const mailServer = new SimpleMailServer();
         await mailServer.start();
 
-        await request('http://localhost:80').post('/sendMail')
+        await request('http://localhost:80').post('/sendmail')
             .expect(200)
 
         await mailServer.stop();
