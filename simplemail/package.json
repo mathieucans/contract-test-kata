@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "package": "docker build -t simple-mail ."
+    "package": "docker build -t simple-mail:1.0 .",
+    "run-in-docker": "docker run --rm -d -p8080:80 --name simple-mail simple-mail:1.0"
   },
   "author": "Mathieu Cans",
   "license": "MIT",
