@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "package": "docker build -t simple-mail ."
   },
   "author": "Mathieu Cans",
   "license": "MIT",
