@@ -6,9 +6,9 @@ export class SimpleMailServer {
     private server?: http.Server;
 
     constructor( private mailBoxes = [
-        new MailBox(1, 'douglas.hofstadter@easymail.com'),
-        new MailBox(2, 'billy.thekid@easymail.com'),
-        new MailBox(3, 'magic.jordan@easymail.com')]){
+        new MailBox(1, 'douglas.hofstadter@simplemail.com'),
+        new MailBox(2, 'billy.thekid@simplemail.com'),
+        new MailBox(3, 'magic.jordan@simplemail.com')]){
 
     }
 
