@@ -19,6 +19,12 @@ describe('simple mail server', () => {
 
     test('list users', async () => {
         await request('http://localhost:80').get('/users')
-            .expect(200);
+            .expect(200, {
+                users: [
+                    {id:1, email:'douglas.hofstadter@easymail.com'},
+                    {id:2, email:'billy.thekid@easymail.com'},
+                    {id:3, email:'magic.jordan@easymail.com'},
+                ]
+            });
     });
 });
