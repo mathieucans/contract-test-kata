@@ -15,6 +15,10 @@ describe('simple mail server', () => {
     test('send a mail with success', async () => {
         await request('http://localhost:80').post('/mails/send')
             .expect(200)
+    });
 
+    test('list users', async () => {
+        await request('http://localhost:80').get('/users')
+            .expect(200);
     });
 });

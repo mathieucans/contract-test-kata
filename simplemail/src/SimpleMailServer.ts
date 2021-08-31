@@ -7,8 +7,11 @@ export class SimpleMailServer {
     start() {
         const app = express();
         app.use(json());
-            app.post('/mails/send', (req, resp) => {
+        app.post('/mails/send', (req, resp) => {
             resp.sendStatus(200);
+        });
+        app.get('/users', (req, res) => {
+            res.sendStatus(200);
         });
 
         return new Promise((resolve) => {
