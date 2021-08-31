@@ -13,7 +13,7 @@ describe('simple mail server', () => {
     });
 
     test('send a mail with success', async () => {
-        await request('http://localhost:80').post('/mails/send')
+        await request('http://localhost:80').post('/1/mails/send')
             .expect(200)
     });
 

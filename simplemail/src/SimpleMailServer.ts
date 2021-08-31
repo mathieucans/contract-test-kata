@@ -13,7 +13,7 @@ export class SimpleMailServer {
     start() {
         const app = express();
         app.use(json());
-        app.post('/mails/send', this.sendMail());
+        app.post('/:userid/mails/send', this.sendMail());
         app.get('/users', this.usersList());
 
         return new Promise((resolve) => {
