@@ -17,6 +17,11 @@ describe('simple mail server', () => {
             .expect(200)
     });
 
+    test('cannot send a mail with wrong user', async () => {
+        await request('http://localhost:80').post('/12354/mails/send')
+            .expect(404)
+    });
+
     test('list users', async () => {
         await request('http://localhost:80').get('/users')
             .expect(200, {

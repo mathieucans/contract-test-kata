@@ -26,6 +26,10 @@ export class SimpleMailServer {
 
     private sendMail() {
         return (req: Request, res: Response) => {
+            if (!this.mailBoxes.find( mb => mb.id === parseInt(req.params.userid))){
+                res.sendStatus(404);
+                return;
+            }
             res.sendStatus(200);
         };
     }
