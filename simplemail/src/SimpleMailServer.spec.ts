@@ -1,10 +1,14 @@
 import request from 'supertest'
 import {SimpleMailServer} from "./SimpleMailServer";
+import {MailBox} from "./MailBox";
 
 describe('simple mail server', () => {
     let mailServer: SimpleMailServer;
     beforeEach(async () => {
-        mailServer = new SimpleMailServer();
+        mailServer = new SimpleMailServer([
+            new MailBox(1, 'douglas.hofstadter@easymail.com'),
+            new MailBox(2, 'billy.thekid@easymail.com'),
+            new MailBox(3, 'magic.jordan@easymail.com')]);
         await mailServer.start();
     });
 

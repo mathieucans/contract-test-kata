@@ -5,10 +5,12 @@ import {MailBox} from "./MailBox";
 export class SimpleMailServer {
     private server?: http.Server;
 
-    private mailBoxes = [
+    constructor( private mailBoxes = [
         new MailBox(1, 'douglas.hofstadter@easymail.com'),
         new MailBox(2, 'billy.thekid@easymail.com'),
-        new MailBox(3, 'magic.jordan@easymail.com')]
+        new MailBox(3, 'magic.jordan@easymail.com')]){
+
+    }
 
     start() {
         const app = express();
