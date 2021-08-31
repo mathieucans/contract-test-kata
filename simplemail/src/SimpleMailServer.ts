@@ -1,8 +1,14 @@
 import http from "http";
 import express, {json, Request, Response} from "express";
+import {MailBox} from "./MailBox";
 
 export class SimpleMailServer {
     private server?: http.Server;
+
+    private mailBoxes = [
+        new MailBox(1, 'douglas.hofstadter@easymail.com'),
+        new MailBox(2, 'billy.thekid@easymail.com'),
+        new MailBox(3, 'magic.jordan@easymail.com')]
 
     start() {
         const app = express();
@@ -19,20 +25,17 @@ export class SimpleMailServer {
     }
 
     private sendMail() {
-        return (req:Request, res:Response) => {
+        return (req: Request, res: Response) => {
             res.sendStatus(200);
         };
     }
 
     private usersList() {
-        return (req:Request, res:Response) => {
+        return (req: Request, res: Response) => {
             res
                 .send({
-                    users: [
-                        {id: 1, email: 'douglas.hofstadter@easymail.com'},
-                        {id: 2, email: 'billy.thekid@easymail.com'},
-                        {id: 3, email: 'magic.jordan@easymail.com'},
-                    ]
+                    users: this.mailBoxes
+                        .map((mailBox) => { return {id: mailBox.id, email:mailBox.email}})
                 })
                 .sendStatus(200);
         };
