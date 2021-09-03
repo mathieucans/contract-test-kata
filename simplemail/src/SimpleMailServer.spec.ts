@@ -9,19 +9,25 @@ const billsMail = 'billy.thekid@simplemail.com';
 const jordanMail = 'magic.jordan@simplemail.com';
 const douglasId = 1;
 const billsId = 2;
-const billysMessages = [
-    new Mail(douglasMail, billsMail, 'Hello from vienne', 'Hi bill, how are you?'),
-    new Mail(jordanMail, billsMail, 'Hello from LA', 'Hi bill, how are you?'),
-];
 
 describe('simple mail server', () => {
     const baseUrl = 'http://localhost:80';
     let mailServer: SimpleMailServer;
+    let mailBoxes: MailBox[];
+    let billsMailbox: MailBox;
+    let billsOriginalMessages: Mail[];
+
     beforeEach(async () => {
-        mailServer = new SimpleMailServer([
+        billsOriginalMessages = [
+            new Mail(douglasMail, billsMail, 'Hello from vienne', 'Hi bill, how are you?'),
+            new Mail(jordanMail, billsMail, 'Hello from LA', 'Hi bill, how are you?'),
+        ];
+        billsMailbox = new MailBox(billsId, billsMail, billsOriginalMessages);
+        mailBoxes = [
             new MailBox(douglasId, douglasMail),
-            new MailBox(billsId, billsMail, billysMessages),
-            new MailBox(3, jordanMail)]);
+            billsMailbox,
+            new MailBox(3, jordanMail)];
+        mailServer = new SimpleMailServer(mailBoxes);
         await mailServer.start();
     });
 
@@ -30,7 +36,7 @@ describe('simple mail server', () => {
     });
 
     test('list received mails of a user', async () => {
-        let jsonBillsMessages = billysMessages.map(m => JSON.parse(JSON.stringify(m)));
+        let jsonBillsMessages = billsOriginalMessages.map(m => JSON.parse(JSON.stringify(m)));
         await request(baseUrl)
             .get(`/${billsId}/mails`)
             .expect(200, {
@@ -38,10 +44,15 @@ describe('simple mail server', () => {
             });
     });
 
-    test('send a mail with success', async () => {
+    test('send a mail to an existing user', async () => {
+        let subject = 'hi from unit tests';
+        let body = 'Is there a red phase?';
         await request(baseUrl)
             .post(`/${douglasId}/mails/send`)
+            .send({to: billsMail, subject: subject, body: body})
             .expect(200)
+
+        expect(billsMailbox.mails[0]).toEqual(new Mail(douglasMail, billsMail, subject, body));
     });
 
     test('cannot send a mail with wrong user', async () => {

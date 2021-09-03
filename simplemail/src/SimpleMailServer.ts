@@ -1,6 +1,7 @@
 import http from "http";
 import express, {json, Request, Response} from "express";
 import {MailBox} from "./MailBox";
+import {Mail} from "./Mail";
 
 export class SimpleMailServer {
     private server?: http.Server;
@@ -39,10 +40,16 @@ export class SimpleMailServer {
     private sendMail() {
         return (req: Request, res: Response) => {
             let userid = parseInt(req.params.userid);
-            if (!this.findMailBox(userid)) {
+            let senderMailBox = this.findMailBox(userid);
+            if (!senderMailBox) {
                 res.sendStatus(404);
                 return;
             }
+
+            const recipient = this.mailBoxes.find(mb => mb.email === req.body.to);
+            recipient!.mails = [new Mail(senderMailBox.email, req.body.to, req.body.subject, req.body.body)]
+                .concat(recipient!.mails);
+
             res.sendStatus(200);
         };
     }
