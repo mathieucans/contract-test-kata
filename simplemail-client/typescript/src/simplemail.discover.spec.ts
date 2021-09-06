@@ -7,6 +7,17 @@ describe('Simple mail api', () => {
             .send()
 
         expect(result.status).toEqual(200);
-        expect(result.body).toEqual({mails:[]});
+        expect(result.body.mails.length).toBeGreaterThan( 0);
+    });
+
+    test('send a mail', async () => {
+        const result = await request.post('http://localhost:8080/1/mails/send')
+            .send({
+                to: 'douglas.hofstadter@simplemail.com',
+                subject: 'Hello',
+                body: 'does it works ?'
+            });
+
+        expect(result.status).toEqual(200);
     });
 });
