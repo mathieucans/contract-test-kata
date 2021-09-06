@@ -1,22 +1,41 @@
 import request from 'superagent'
 
-describe('Simple mail api', () => {
-    test('retrieve mails of a user', async () => {
+class SimpleMailApi {
+    private baseUrl = `http://localhost:8080`;
+    private userId = `1`;
 
-        const result = await request.get('http://localhost:8080/1/mails')
+    async retrieveMail(): Promise<request.SuperAgentRequest> {
+        return request.get(`${this.baseUrl}/${this.userId}/mails`)
             .send()
+    }
 
-        expect(result.status).toEqual(200);
-        expect(result.body.mails.length).toBeGreaterThan( 0);
+    async sendMail(to: string, subject: string, body: string) {
+        const result = await request.post('http://localhost:8080/1/mails/send')
+            .send({
+                to: to,
+                subject: subject,
+                body: body
+            });
+        return result;
+    }
+
+}
+
+
+describe('Simple mail api', () => {
+    let simpleMail: SimpleMailApi;
+    beforeEach(() => {
+        simpleMail = new SimpleMailApi();
+    });
+
+    test('retrieve mails of a user', async () => {
+        const result = await simpleMail.retrieveMail();
+
+        expect(result.body.mails.length).toBeGreaterThan(0);
     });
 
     test('send a mail', async () => {
-        const result = await request.post('http://localhost:8080/1/mails/send')
-            .send({
-                to: 'douglas.hofstadter@simplemail.com',
-                subject: 'Hello',
-                body: 'does it works ?'
-            });
+        const result = await simpleMail.sendMail('douglas.hofstadter@simplemail.com', 'Hello', 'does it works ?');
 
         expect(result.status).toEqual(200);
     });
