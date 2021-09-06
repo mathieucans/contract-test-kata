@@ -22,7 +22,7 @@ class SimpleMailApi {
 }
 
 
-describe('Simple mail api', () => {
+describe('Simple mail api integration tests', () => {
     let simpleMail: SimpleMailApi;
     beforeEach(() => {
         simpleMail = new SimpleMailApi();
@@ -35,7 +35,10 @@ describe('Simple mail api', () => {
     });
 
     test('send a mail', async () => {
-        const result = await simpleMail.sendMail('douglas.hofstadter@simplemail.com', 'Hello', 'does it works ?');
+        const result = await simpleMail.sendMail(
+            'douglas.hofstadter@simplemail.com',
+            'Hello',
+            'does it works ?');
 
         expect(result.status).toEqual(200);
     });
