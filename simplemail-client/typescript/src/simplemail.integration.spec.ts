@@ -20,5 +20,15 @@ describe('Simple mail api integration tests', () => {
             'does it works ?');
 
         expect(result.status).toEqual(200);
+
+        const mails = await simpleMail.retrieveMail();
+
+        expect(mails).toContainEqual({
+            from:'douglas.hofstadter@simplemail.com',
+            to: 'douglas.hofstadter@simplemail.com',
+            subject:'Hello',
+            body:'does it works ?'
+        })
+
     });
 });
