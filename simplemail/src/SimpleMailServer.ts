@@ -31,8 +31,13 @@ export class SimpleMailServer {
     private listMails() {
         return (req: Request, res: Response) => {
             let userid = parseInt(req.params.userid);
+            let mailBox = this.findMailBox(userid);
+            if (mailBox === undefined){
+                res.sendStatus(404);
+                return;
+            }
             res.send({
-                mails: this.findMailBox(userid)!.mails})
+                mails: mailBox!.mails})
                 .sendStatus(200);
         };
     }
