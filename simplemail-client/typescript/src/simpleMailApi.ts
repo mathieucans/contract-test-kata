@@ -1,6 +1,11 @@
 import request from "superagent";
 
-export class SimpleMailApi {
+export interface SimpleMail {
+    retrieveMail(): Promise<any>;
+    sendMail(to: string, subject: string, body: string): Promise<any>;
+}
+
+export class SimpleMailApi implements SimpleMail {
     private userId = `1`;
 
     constructor(
