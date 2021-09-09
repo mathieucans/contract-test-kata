@@ -5,6 +5,7 @@ import {Mail} from "./Mail";
 
 export class SimpleMailServer {
     private server?: http.Server;
+    private static _nextMailId: number = 1;
 
     constructor(private mailBoxes = [
         new MailBox(1, 'douglas.hofstadter@simplemail.com'),
@@ -52,11 +53,24 @@ export class SimpleMailServer {
             }
 
             const recipient = this.mailBoxes.find(mb => mb.email === req.body.to);
-            recipient!.mails = [new Mail(senderMailBox.email, req.body.to, req.body.subject, req.body.body)]
+            recipient!.mails = [this.createMail(senderMailBox, req)]
                 .concat(recipient!.mails);
 
             res.sendStatus(200);
         };
+    }
+
+    private createMail(senderMailBox: MailBox, req: Request) {
+        return new Mail(
+            `${SimpleMailServer.nextId()}`,
+            senderMailBox.email,
+            req.body.to,
+            req.body.subject,
+            req.body.body);
+    }
+
+    private static nextId(): number {
+        return SimpleMailServer._nextMailId++;
     }
 
     private findMailBox(userid: number) {

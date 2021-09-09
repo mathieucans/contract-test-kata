@@ -7,6 +7,7 @@
     "test": "jest",
     "build": "tsc",
     "package": "docker build -t simple-mail:1.0 .",
+    "package-proxy": "docker build -t simple-mail:1.0 --build-arg HTTP_PROXY=http://proxy.rd.francetelecom.fr:8080 --build-arg HTTPS_PROXY=http://proxy.rd.francetelecom.fr:8080  .",
     "run-in-docker": "docker run --rm -d -p8080:80 --name simple-mail simple-mail:1.0"
   },
   "author": "Mathieu Cans",

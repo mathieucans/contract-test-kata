@@ -19,8 +19,8 @@ describe('simple mail server', () => {
 
     beforeEach(async () => {
         billsOriginalMessages = [
-            new Mail(douglasMail, billsMail, 'Hello from vienne', 'Hi bill, how are you?'),
-            new Mail(jordanMail, billsMail, 'Hello from LA', 'Hi bill, how are you?'),
+            new Mail('a',douglasMail, billsMail, 'Hello from vienne', 'Hi bill, how are you?'),
+            new Mail('b',jordanMail, billsMail, 'Hello from LA', 'Hi bill, how are you?'),
         ];
         billsMailbox = new MailBox(billsId, billsMail, billsOriginalMessages);
         mailBoxes = [
@@ -52,7 +52,8 @@ describe('simple mail server', () => {
             .send({to: billsMail, subject: subject, body: body})
             .expect(200)
 
-        expect(billsMailbox.mails[0]).toEqual(new Mail(douglasMail, billsMail, subject, body));
+        expect(billsMailbox.mails[0]).toEqual(new Mail('1',
+        douglasMail, billsMail, subject, body));
     });
 
     test('cannot send a mail with wrong user', async () => {
