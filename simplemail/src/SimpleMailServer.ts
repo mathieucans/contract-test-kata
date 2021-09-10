@@ -1,14 +1,17 @@
 import http from "http";
 import express, {json, Request, Response} from "express";
 import {MailBox} from "./MailBox";
-import {Mail} from "./Mail";
+import {MailFactory} from "./MailFactory";
+
+const douglasMail = 'douglas.hofstadter@simplemail.com';
 
 export class SimpleMailServer {
     private server?: http.Server;
-    private static _nextMailId: number = 1;
 
     constructor(private mailBoxes = [
-        new MailBox(1, 'douglas.hofstadter@simplemail.com'),
+        new MailBox(1, douglasMail, [
+            MailFactory.create('someone@simplemail.com', douglasMail, 'hello doug from LA!', 'every body need some body')
+        ]),
         new MailBox(2, 'billy.thekid@simplemail.com'),
         new MailBox(3, 'magic.jordan@simplemail.com')]) {
 
@@ -53,25 +56,13 @@ export class SimpleMailServer {
             }
 
             const recipient = this.mailBoxes.find(mb => mb.email === req.body.to);
-            recipient!.mails = [this.createMail(senderMailBox, req)]
+            recipient!.mails = [MailFactory.create(senderMailBox.email, req.body.to, req.body.subject, req.body.body)]
                 .concat(recipient!.mails);
 
             res.sendStatus(200);
         };
     }
 
-    private createMail(senderMailBox: MailBox, req: Request) {
-        return new Mail(
-            `${SimpleMailServer.nextId()}`,
-            senderMailBox.email,
-            req.body.to,
-            req.body.subject,
-            req.body.body);
-    }
-
-    private static nextId(): number {
-        return SimpleMailServer._nextMailId++;
-    }
 
     private findMailBox(userid: number) {
         return this.mailBoxes.find(mb => mb.id === userid);
