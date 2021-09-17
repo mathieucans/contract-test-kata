@@ -10,10 +10,11 @@ export class LocalHttpServer {
         this.app.use(json());
     }
 
-    configureGet(url: string, responseBody: any) {
+    configureGet(url: string, responseBody: any): this {
         this.app.get(url, (req, res) => {
             res.send(responseBody)
         });
+        return this;
     }
 
     async start(port: number) {
