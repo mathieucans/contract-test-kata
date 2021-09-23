@@ -1,27 +1,27 @@
 import http from "http";
 import express, {json, Request, Response} from "express";
-import {MailBox} from "./MailBox";
-import {MailFactory} from "./MailFactory";
+import {MessageBox} from "./MessageBox";
+import {MessageFactory} from "./MessageFactory";
 
-const douglasMail = 'douglas.hofstadter@simplemail.com';
+const douglasMail = 'douglas.hofstadter';
 
-export class SimpleMailServer {
+export class SimpleMessageServer {
     private server?: http.Server;
 
     constructor(private mailBoxes = [
-        new MailBox(1, douglasMail, [
-            MailFactory.create('someone@simplemail.com', douglasMail, 'hello doug from LA!', 'every body need some body')
+        new MessageBox(1, douglasMail, [
+            MessageFactory.create('someone', douglasMail, 'hello doug from LA!')
         ]),
-        new MailBox(2, 'billy.thekid@simplemail.com'),
-        new MailBox(3, 'magic.jordan@simplemail.com')]) {
+        new MessageBox(2, 'billy.thekid'),
+        new MessageBox(3, 'magic.jordan')]) {
 
     }
 
     start() {
         const app = express();
         app.use(json());
-        app.post('/:userid/mails/send', this.sendMail());
-        app.get('/:userid/mails', this.listMails());
+        app.post('/:userid/messages/send', this.sendMail());
+        app.get('/:userid/messages', this.listMails());
         app.get('/users', this.usersList());
 
         return new Promise((resolve) => {
@@ -41,7 +41,7 @@ export class SimpleMailServer {
                 return;
             }
             res.send({
-                mails: mailBox!.mails})
+                messages: mailBox!.messages})
                 .sendStatus(200);
         };
     }
@@ -55,9 +55,9 @@ export class SimpleMailServer {
                 return;
             }
 
-            const recipient = this.mailBoxes.find(mb => mb.email === req.body.to);
-            recipient!.mails = [MailFactory.create(senderMailBox.email, req.body.to, req.body.subject, req.body.body)]
-                .concat(recipient!.mails);
+            const recipient = this.mailBoxes.find(mb => mb.owner === req.body.to);
+            recipient!.messages = [MessageFactory.create(senderMailBox.owner, req.body.to, req.body.message)]
+                .concat(recipient!.messages);
 
             res.sendStatus(200);
         };
@@ -74,7 +74,7 @@ export class SimpleMailServer {
                 .send({
                     users: this.mailBoxes
                         .map((mailBox) => {
-                            return {id: mailBox.id, email: mailBox.email}
+                            return {id: mailBox.id, email: mailBox.owner}
                         })
                 })
                 .sendStatus(200);

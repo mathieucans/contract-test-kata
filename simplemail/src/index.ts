@@ -1,3 +1,3 @@
-import {SimpleMailServer} from "./SimpleMailServer";
+import {SimpleMessageServer} from "./SimpleMessageServer";
 
-new SimpleMailServer().start();
+new SimpleMessageServer().start();

@@ -1,19 +1,18 @@
-import {Mail} from "./Mail";
+import {Message} from "./Message";
 
-export class MailFactory {
+export class MessageFactory {
     private static _nextMailId: number = 1;
 
     private static nextId(): number {
         return this._nextMailId++;
     }
 
-    static create(from: string, to: string, subject: string, body: string) {
-        return new Mail(
+    static create(from: string, to: string, subject: string) {
+        return new Message(
             `${this.nextId()}`,
             from,
             to,
-            subject,
-            body);
+            subject);
     }
 
 }
