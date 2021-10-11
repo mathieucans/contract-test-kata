@@ -1,7 +1,7 @@
 import {LocalHttpServer} from "./LocalHttpServer";
 import {SimpleMessageSdk} from "./SimpleMessageSdk";
 
-describe('SimpleMailApi', () => {
+describe('SimpleMessageApi', () => {
     let server: any;
     let simpleMessageSdk: SimpleMessageSdk;
     beforeEach(async () => {
