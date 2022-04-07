@@ -1,6 +1,14 @@
 Contract test kata
 ===================
 
+# Goals
+
+The goal of this kata is to practice 3rd party service integration guided by test.
+
+You have to write a simple application that auto-reply to the sender that you are out of office.
+
+To do that you have to run simplemessage server and write the application in the language of your choice in the simplemessage-client folder.
+
 # Build and run simplemessage server
 
 To build and run simple message server :
@@ -13,7 +21,9 @@ npm run package
 npm run  run-in-docker
 ```
 
-# Simple message api :
+Now you have server running on http://localhost:8080 that simulate a instant messaging service.
+
+# Simple message api
 
 ## lists users on the server
 
