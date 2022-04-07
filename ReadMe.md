@@ -5,13 +5,15 @@ Contract test kata
 
 The goal of this kata is to practice 3rd party service integration guided by test.
 
+A second goal can be practice Domain Driven Design and hexagonal architecture to build a simple application. 
+
 You have to write a simple application that auto-reply to the sender that you are out of office.
 
 To do that you have to run simplemessage server and write the application in the language of your choice in the simplemessage-client folder.
 
-# Build and run simplemessage server
+# Get started
 
-To build and run simple message server :
+Build and run simple message server :
 
 ```shell
 cd simplemessage
@@ -22,6 +24,12 @@ npm run  run-in-docker
 ```
 
 Now you have server running on http://localhost:8080 that simulate a instant messaging service.
+
+# Tips to run this kata
+1. Discover how the simplemessage server works by writing contract test
+1. Extract a simple SDK from this test and write additional unit test with example extract from contact test execution
+1. Use this SDK to write a simple auto-reply application
+
 
 # Simple message api
 
