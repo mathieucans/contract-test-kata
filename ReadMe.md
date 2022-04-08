@@ -27,9 +27,9 @@ Now you have server running on http://localhost:8080 that simulate a instant mes
 
 # Tips to run this kata
 1. Discover how the simplemessage server works by writing contract test
-1. Extract a simple SDK from this test and write additional unit test with example extract from contact test execution
-1. Use this SDK to write a simple auto-reply application
-
+2. Extract a simple SDK from this test and write additional unit test with example extract from contact test execution
+3. Build an "in memory" implementation of this SDK. Use same contract test to check both real & in memory version of the sdk.   
+4. Use "in memory" SDK to write a simple auto-reply application in TDD. Eventually explore DDD and/or hexagonal architecture.
 
 # Simple message api
 
