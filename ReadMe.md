@@ -17,6 +17,7 @@ Build and run simple message server :
 
 ```shell
 cd simplemessage
+npm install
 npm run build
 npm run package 
 # NOTE behind proxy use npm run package-proxy
