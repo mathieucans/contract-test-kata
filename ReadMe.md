@@ -27,6 +27,7 @@ npm run  run-in-docker
 Now you have server running on http://localhost:8080 that simulate a instant messaging service.
 
 # Tips to run this kata
+As proposed in the [presentation slides](./doc/IntegrationThirdParty.key):
 1. Discover how the simplemessage server works by writing contract test
 2. Extract a simple SDK from this test and write additional unit test with example extract from contact test execution
 3. Build an "in memory" implementation of this SDK. Use same contract test to check both real & in memory version of the sdk.   
