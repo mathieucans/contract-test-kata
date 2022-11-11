@@ -13,7 +13,17 @@ To do that you have to run simplemessage server and write the application in the
 
 # Get started
 
-Build and run simple message server :
+There's two way to run the server on your own machine : 
+ - Use the docker hub's image (needs docker)
+ - Build and run simple-message server (needs node)
+
+## Use the docker hub's image
+
+```
+docker run --rm -d -p8080:80 --name simple-message mathieucans/simple-message:1.0
+```
+
+## Build and run simple-message server
 
 ```shell
 cd simplemessage
