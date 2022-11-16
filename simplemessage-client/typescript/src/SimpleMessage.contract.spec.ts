@@ -6,8 +6,8 @@ import request from "superagent";
 
 describe('Simple message api contract tests', () => {
     test('list received messages', async () => {
-        const response = await request.get('http://localhost:8080/:userId/messages');
-        expect(response.status).toEqual(200);
+        const response = await request.get('http://localhost:8080/1/messages');
+        expect(response.body).toEqual({});
     });
 });
 
