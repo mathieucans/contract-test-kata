@@ -1,11 +1,12 @@
 Simple message api documentation
--------
+=========
+
 The simple message server offer the folowing features :
  - [Lists users](SimpleMessageApiDocumentation.md#lists-users)
  - [List messages](SimpleMessageApiDocumentation.md#list-messages)
  - [Send a message](SimpleMessageApiDocumentation.md#send-a-message)
 
-# Lists users 
+## Lists users 
  
 ```shell
 curl -X GET http://localhost:8080/users
@@ -29,7 +30,7 @@ curl -X GET http://localhost:8080/users
 }
 ```
 
-# List messages
+## List messages
 
 ```shell
 curl -X GET http://localhost:8080/:userid/messages
@@ -47,7 +48,7 @@ curl -X GET http://localhost:8080/:userid/messages
 }
 ```
 
-# Send a message
+## Send a message
 ```shell
 curl -vvv -X POST http://localhost:8080/1/messages/send -H 'Content-Type: application/json' -d '{"to":"billy.thekid","message":"tyty"}'
 ```
