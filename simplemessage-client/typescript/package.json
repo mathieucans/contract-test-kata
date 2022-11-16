@@ -1,5 +1,5 @@
 {
-  "name": "simplemail-client",
+  "name": "contract-test-kata-typescript",
   "version": "1.0.0",
   "description": "Client to practice 3rd service integration",
   "main": "index.js",
