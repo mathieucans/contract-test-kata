@@ -11,6 +11,12 @@ describe('Simple message api contract tests', () => {
         expect(response.body).toEqual({
             "messages": [
                 {
+                    "from": "douglas.hofstadter",
+                    "id": "2",
+                    "message": "Hello from contract test",
+                    "to": "douglas.hofstadter"
+                },
+                {
                     "from": "someone",
                     "id": "1",
                     "message": "hello doug from LA!",
@@ -21,10 +27,8 @@ describe('Simple message api contract tests', () => {
     });
 
     test('send a message', async () => {
-        const response = await request.post(`http://localhost:8080/1/messages/send`)
+        await request.post(`http://localhost:8080/1/messages/send`)
             .send({to: 'douglas.hofstadter', message: 'Hello from contract test'});
-
-        expect(response.body).toEqual({});
     });
 });
 
