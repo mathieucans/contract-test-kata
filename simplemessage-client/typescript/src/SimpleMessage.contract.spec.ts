@@ -2,7 +2,7 @@
 // http://localhost:8080/:userId/messages
 // and user id 1
 
-import request from "superagent";
+import {SimpleMessageSdk} from "./SimpleMessageSdk";
 
 export class Message {
     constructor(
@@ -15,15 +15,9 @@ export class Message {
 
 }
 
-async function listMessages() {
-    const response = await request.get('http://localhost:8080/1/messages');
-    let messages = response.body.messages.map((m: any) => new Message(m.from, m.id, m.message, m.to));
-    return messages;
-}
-
 describe('Simple message api contract tests', () => {
     test('list received messages', async () => {
-        let messages = await listMessages();
+        let messages = await new SimpleMessageSdk().listMessage();
         expect(messages.slice(-2)).toEqual([
             new Message(
                 "douglas.hofstadter",
@@ -42,10 +36,10 @@ describe('Simple message api contract tests', () => {
 
     test('send a message', async () => {
         const expectedMessage = `Hello from contract test ${Date.now()}`;
-        await request.post(`http://localhost:8080/1/messages/send`)
-            .send({to: 'douglas.hofstadter', message: expectedMessage});
+        const to = 'douglas.hofstadter';
+        await new SimpleMessageSdk().sendMessage(to, expectedMessage);
 
-        const messages = await listMessages()
+        const messages = await new SimpleMessageSdk().listMessage()
 
         expect(messages[0].message).toEqual(expectedMessage);
     });
