@@ -46,6 +46,19 @@ function checkContract(name:string, simpleMessageFactory: () => SimpleMessage) {
 
 describe('Simple message api contract tests', () => {
     checkContract('sdk', () => new SimpleMessageSdk());
-    checkContract('in memory', () => new SimpleMessageInMemory());
+    checkContract('in memory', () => new SimpleMessageInMemory([
+        new Message(
+            "douglas.hofstadter",
+            "2",
+            "Hello from contract test",
+            "douglas.hofstadter"
+        ),
+        new Message(
+            "someone",
+            "1",
+            "hello doug from LA!",
+            "douglas.hofstadter"
+        )
+    ], 'douglas.hofstadter'));
 });
 

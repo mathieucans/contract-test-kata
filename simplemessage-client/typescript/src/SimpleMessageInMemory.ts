@@ -2,11 +2,25 @@ import {SimpleMessage} from "./SimpleMessageSdk";
 import {Message} from "./Message";
 
 export class SimpleMessageInMemory implements SimpleMessage {
-    listMessage(): Promise<Message[]> {
-        return Promise.resolve([]);
+    constructor(
+        private inbox: Message[],
+        private readonly owner: string
+    ) {
     }
 
-    sendMessage(to: string, message: string): Promise<void> {
-        return Promise.resolve(undefined);
+
+    async listMessage(): Promise<Message[]> {
+        return this.inbox;
+    }
+
+    async sendMessage(to: string, message: string): Promise<void> {
+        if (to === this.owner) {
+            this.inbox.unshift(new Message(
+                this.owner,
+                `${this.inbox.length + 1}`,
+                message,
+                to
+            ))
+        }
     }
 }
