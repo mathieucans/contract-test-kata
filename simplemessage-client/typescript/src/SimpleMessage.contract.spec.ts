@@ -3,7 +3,6 @@
 // and user id 1
 
 import request from "superagent";
-import {response} from "express";
 
 async function listMessages() {
     const response = await request.get('http://localhost:8080/1/messages');
@@ -14,7 +13,7 @@ async function listMessages() {
 describe('Simple message api contract tests', () => {
     test('list received messages', async () => {
         let messages = await listMessages();
-        expect(messages).toEqual([
+        expect(messages.slice(-2)).toEqual([
             {
                 "from": "douglas.hofstadter",
                 "id": "2",
