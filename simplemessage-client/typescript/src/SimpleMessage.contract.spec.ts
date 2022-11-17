@@ -4,9 +4,20 @@
 
 import request from "superagent";
 
+export class Message {
+    constructor(
+        public readonly from: string,
+        public readonly id: string,
+        public readonly message: string,
+        public readonly to: string) {
+
+    }
+
+}
+
 async function listMessages() {
     const response = await request.get('http://localhost:8080/1/messages');
-    let messages = response.body.messages;
+    let messages = response.body.messages.map((m: any) => new Message(m.from, m.id, m.message, m.to));
     return messages;
 }
 
@@ -14,18 +25,18 @@ describe('Simple message api contract tests', () => {
     test('list received messages', async () => {
         let messages = await listMessages();
         expect(messages.slice(-2)).toEqual([
-            {
-                "from": "douglas.hofstadter",
-                "id": "2",
-                "message": "Hello from contract test",
-                "to": "douglas.hofstadter"
-            },
-            {
-                "from": "someone",
-                "id": "1",
-                "message": "hello doug from LA!",
-                "to": "douglas.hofstadter"
-            }
+            new Message(
+                "douglas.hofstadter",
+                "2",
+                "Hello from contract test",
+                "douglas.hofstadter"
+            ),
+            new Message(
+                "someone",
+                "1",
+                "hello doug from LA!",
+                "douglas.hofstadter"
+            )
         ]);
     });
 
