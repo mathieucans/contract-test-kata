@@ -30,9 +30,9 @@ describe('Simple message api contract tests', () => {
     });
 
     test('send a message', async () => {
-        let expectedMessage = 'Hello from contract test';
-        // await request.post(`http://localhost:8080/1/messages/send`)
-        //     .send({to: 'douglas.hofstadter', message: expectedMessage});
+        const expectedMessage = `Hello from contract test ${Date.now()}`;
+        await request.post(`http://localhost:8080/1/messages/send`)
+            .send({to: 'douglas.hofstadter', message: expectedMessage});
 
         const messages = await listMessages()
 
