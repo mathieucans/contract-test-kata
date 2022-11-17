@@ -2,7 +2,7 @@
 // http://localhost:8080/:userId/messages
 // and user id 1
 
-import {SimpleMessageSdk} from "./SimpleMessageSdk";
+import {SimpleMessage, SimpleMessageSdk} from "./SimpleMessageSdk";
 
 export class Message {
     constructor(
@@ -16,8 +16,14 @@ export class Message {
 }
 
 describe('Simple message api contract tests', () => {
+    let simpleMessageSdk: SimpleMessage;
+
+    beforeEach(() => {
+        simpleMessageSdk = new SimpleMessageSdk();
+    });
+
     test('list received messages', async () => {
-        let messages = await new SimpleMessageSdk().listMessage();
+        let messages = await simpleMessageSdk.listMessage();
         expect(messages.slice(-2)).toEqual([
             new Message(
                 "douglas.hofstadter",
@@ -37,9 +43,9 @@ describe('Simple message api contract tests', () => {
     test('send a message', async () => {
         const expectedMessage = `Hello from contract test ${Date.now()}`;
         const to = 'douglas.hofstadter';
-        await new SimpleMessageSdk().sendMessage(to, expectedMessage);
+        await simpleMessageSdk.sendMessage(to, expectedMessage);
 
-        const messages = await new SimpleMessageSdk().listMessage()
+        const messages = await simpleMessageSdk.listMessage()
 
         expect(messages[0].message).toEqual(expectedMessage);
     });
