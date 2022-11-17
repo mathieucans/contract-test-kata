@@ -1,5 +1,5 @@
 import request from "superagent";
-import {Message} from "./SimpleMessage.contract.spec";
+import {Message} from "./Message";
 
 export interface SimpleMessage {
     listMessage(): Promise<Message[]>;
