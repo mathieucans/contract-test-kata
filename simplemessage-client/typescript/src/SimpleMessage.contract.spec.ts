@@ -5,25 +5,29 @@
 import request from "superagent";
 import {response} from "express";
 
+async function listMessages() {
+    const response = await request.get('http://localhost:8080/1/messages');
+    let messages = response.body.messages;
+    return messages;
+}
+
 describe('Simple message api contract tests', () => {
     test('list received messages', async () => {
-        const response = await request.get('http://localhost:8080/1/messages');
-        expect(response.body).toEqual({
-            "messages": [
-                {
-                    "from": "douglas.hofstadter",
-                    "id": "2",
-                    "message": "Hello from contract test",
-                    "to": "douglas.hofstadter"
-                },
-                {
-                    "from": "someone",
-                    "id": "1",
-                    "message": "hello doug from LA!",
-                    "to": "douglas.hofstadter"
-                }
-            ]
-        });
+        let messages = await listMessages();
+        expect(messages).toEqual([
+            {
+                "from": "douglas.hofstadter",
+                "id": "2",
+                "message": "Hello from contract test",
+                "to": "douglas.hofstadter"
+            },
+            {
+                "from": "someone",
+                "id": "1",
+                "message": "hello doug from LA!",
+                "to": "douglas.hofstadter"
+            }
+        ]);
     });
 
     test('send a message', async () => {
