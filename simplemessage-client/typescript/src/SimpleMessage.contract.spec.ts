@@ -3,6 +3,7 @@
 // and user id 1
 
 import request from "superagent";
+import {response} from "express";
 
 describe('Simple message api contract tests', () => {
     test('list received messages', async () => {
@@ -17,6 +18,13 @@ describe('Simple message api contract tests', () => {
                 }
             ]
         });
+    });
+
+    test('send a message', async () => {
+        const response = await request.post(`http://localhost:8080/1/messages/send`)
+            .send({to: 'douglas.hofstadter', message: 'Hello from contract test'});
+
+        expect(response.body).toEqual({});
     });
 });
 
