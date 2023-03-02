@@ -45,3 +45,4 @@ As proposed in the [presentation slides](./doc/IntegrationThirdPartyPresentation
 
 ## See also
  - [Simple message api documentation](SimpleMessageApiDocumentation.md)
+ - [Testing Without Mocks: A Pattern Language (article from James Shore)](https://www.jamesshore.com/v2/projects/nullables/testing-without-mocks)
